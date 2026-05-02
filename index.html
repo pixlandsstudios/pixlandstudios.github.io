@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixland Studios</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #080808;
+    --surface: #0f0f0f;
+    --border: #1e1e1e;
+    --accent: #ff4d00;
+    --accent2: #ff8c42;
+    --text: #e8e8e8;
+    --muted: #555;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,77,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,77,0,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridMove 20s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes gridMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(40px); }
+  }
+
+  .card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 48px 56px 40px;
+    width: 420px;
+    text-align: center;
+    box-shadow:
+      0 0 80px rgba(255,77,0,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Corner accents */
+  .card::before, .card::after {
+    content: '';
+    position: absolute;
+    width: 16px; height: 16px;
+    border-color: var(--accent);
+    border-style: solid;
+  }
+  .card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .card::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .logo-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { filter: drop-shadow(0 0 6px rgba(255,77,0,0.4)); }
+    50%      { filter: drop-shadow(0 0 18px rgba(255,140,66,0.8)); }
+  }
+
+  .studio-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .game-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 40px;
+  }
+
+  .divider {
+    width: 40px; height: 2px;
+    background: var(--accent);
+    margin: 0 auto 32px;
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  .label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .visit-count {
+    font-family: 'Orbitron', monospace;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    margin-bottom: 6px;
+    transition: all 0.4s ease;
+    filter: drop-shadow(0 0 20px rgba(255,77,0,0.3));
+  }
+
+  .visit-unit {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: #161616;
+    border-radius: 2px;
+    height: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--accent);
+    transition: width 1s cubic-bezier(0.16,1,0.3,1);
+    width: 0%;
+  }
+
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 32px;
+  }
+
+  /* Status */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #2ecc71;
+    box-shadow: 0 0 8px #2ecc71;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <span class="logo-icon">🟧</span>
+  <div class="studio-name">1% Speed Tsunami Escape</div>
+  <div class="game-title">Pixland Studios</div>
+  <div class="divider"></div>
+
+  <div class="label">Toplam Visit</div>
+  <div class="visit-count" id="counter" style="font-size: 36px;">Yükleniyor</div>
+  <div class="visit-unit">visits</div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar" id="bar"></div>
+  </div>
+  <div class="progress-labels">
+    <span>0</span>
+    <span id="goalLabel">–</span>
+  </div>
+
+  <div class="status">
+    <div class="dot"></div>
+    <span>Live Tracking</span>
+  </div>
+</div>
+
+<script>
+  // Senin verdiğin oyunun Place ID'si
+  const PLACE_ID = "102611886757318";
+
+  const counterEl = document.getElementById('counter');
+  const barEl     = document.getElementById('bar');
+  const goalEl    = document.getElementById('goalLabel');
+
+  // Sayıları 100K, 1M gibi formatlayan fonksiyon
+  function formatNum(n) {
+    if (n >= 1_000_000) return (n / 1_000_000).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    if (n >= 1_000)     return (n / 1_000).toFixed(1).replace(/\.?0+$/, '')    + 'K';
+    return n.toString();
+  }
+
+  // Sayıları animasyonlu şekilde arttıran fonksiyon
+  function animateTo(target, milestone) {
+    const duration = 2200;
+    const start = performance.now();
+    const from = 0;
+    counterEl.style.fontSize = "52px"; // "Yükleniyor" yazısından sonra fontu büyüt
+
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 4);
+      const val = Math.round(from + (target - from) * ease);
+      counterEl.textContent = formatNum(val);
+      barEl.style.width = Math.min((val / milestone) * 100, 100) + '%';
+      if (t < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // Roblox'tan veriyi otomatik çeken ana fonksiyon
+  async function fetchLiveVisits() {
+    try {
+      // 1. Adım: CORS hatası almamak için RoProxy üzerinden Place ID'den Universe ID'yi buluyoruz
+      const uniRes = await fetch(`https://apis.roproxy.com/universes/v1/places/${PLACE_ID}/universe`);
+      const uniData = await uniRes.json();
+      const universeId = uniData.universeId;
+
+      // 2. Adım: Bulduğumuz Universe ID ile oyunun detaylarını (visit) çekiyoruz
+      const gameRes = await fetch(`https://games.roproxy.com/v1/games?universeIds=${universeId}`);
+      const gameData = await gameRes.json();
+      
+      const liveVisits = gameData.data[0].visits;
+
+      // Hedef (Milestone) barını otomatik ayarlıyoruz. (Örn: 128 bin ise barın sonunu 200 bin yapar)
+      let milestoneValue = 100_000;
+      if (liveVisits > 0) {
+        milestoneValue = Math.ceil(liveVisits / 100000) * 100_000;
+      }
+      
+      goalEl.textContent = formatNum(milestoneValue);
+
+      // Veri geldi, animasyonu başlat
+      animateTo(liveVisits, milestoneValue);
+
+    } catch (error) {
+      console.error("Roblox API'den veri çekilemedi:", error);
+      counterEl.textContent = "HATA";
+      counterEl.style.fontSize = "36px";
+    }
+  }
+
+  // Sayfa açıldıktan kısa süre sonra veriyi çekmeye başla
+  setTimeout(fetchLiveVisits, 500);
+</script>
+</body>
+</html>
